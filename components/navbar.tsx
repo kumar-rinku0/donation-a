@@ -9,7 +9,7 @@ const links = [
 const Navbar = () => {
   return (
     <div className="h-20 flex items-center justify-around px-8 bg-gray-800 text-white">
-      <h1>Alpa Donate</h1>
+      <h1>Alpha Donate</h1>
       <nav>
         <ul className="flex space-x-4">
           {links.map((link) => (
