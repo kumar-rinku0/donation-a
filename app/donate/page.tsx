@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import Form from "next/form";
 import { Button } from "@/components/ui/button";
