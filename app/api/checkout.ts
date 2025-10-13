@@ -6,6 +6,11 @@ import { redirect } from "next/navigation";
 import { createHmac } from "crypto";
 
 const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY!;
+type RazorpayPaymentType = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
 
 export async function handleSubmitDonation(formData: FormData) {
   const data = Object.fromEntries(formData);
@@ -30,11 +35,7 @@ export async function handleSubmitDonation(formData: FormData) {
   redirect(`/donate/${order_id}`);
 }
 
-export async function handleVerifyPayment(payment: {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-}) {
+export async function handleVerifyPayment(payment: RazorpayPaymentType) {
   const payment_details = await prisma.payment.findUnique({
     where: { order_id: payment.razorpay_order_id },
   });
