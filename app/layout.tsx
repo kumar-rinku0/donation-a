@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alpa Donate",
+  title: "Alpha Donate",
   description: "A platform for donating to charitable causes",
 };
 
