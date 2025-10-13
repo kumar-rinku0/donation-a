@@ -1,6 +1,9 @@
 "use client";
 
+import { handleVerifyPayment } from "@/app/api/checkout";
 import { Button } from "./ui/button";
+
+const razorpay_key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
 declare global {
   interface Window {
@@ -23,22 +26,29 @@ const PaymentInit = ({
     message: string;
   };
 }) => {
+  const displayRazorpay = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay SDK failed to load.");
+      return;
+    }
+  };
   const handlePay = async () => {
+    await displayRazorpay();
     const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!, // Public key
+      key: razorpay_key_id!, // Public key
       amount: payment.amount,
       currency: "INR",
       name: "My Store",
       description: "Order Payment",
       order_id: payment.order_id,
-      handler: function (response: any) {
-        alert("Payment Successful: " + response.razorpay_payment_id);
-        // ✅ Optionally call a backend API to verify and save payment
-      },
+      handler: handleVerifyPayment,
       prefill: {
-        name: "Customer Name",
-        email: "customer@example.com",
-        contact: "9999999999",
+        name: payment.name,
+        email: payment.email,
+        contact: Number(payment.phone),
       },
       theme: {
         color: "#3399cc",
@@ -50,10 +60,24 @@ const PaymentInit = ({
   };
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <Button onClick={handlePay}>Pay ₹{payment.amount}</Button>
-      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      <Button id="paymentBTN" onClick={handlePay}>
+        Pay ₹{payment.amount}
+      </Button>
     </div>
   );
 };
 
 export default PaymentInit;
+
+const loadScript = (src: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    const paymentBtn = document.querySelector("#paymentBTN");
+    if (paymentBtn) {
+      paymentBtn.appendChild(script);
+    }
+  });
+};

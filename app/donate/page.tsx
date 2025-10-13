@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle, Heart, Shield } from "lucide-react";
-import { handleSubmit } from "../api/checkout";
+import { handleSubmitDonation } from "../api/checkout";
 const Donate = () => {
   return (
     <div className="min-h-screen p-8">
@@ -48,7 +48,7 @@ export default Donate;
 const Donation = () => {
   return (
     <div className="max-w-md mx-auto mt-8 p-4 border rounded">
-      <Form action={handleSubmit} className="flex flex-col space-y-4">
+      <Form action={handleSubmitDonation} className="flex flex-col space-y-4">
         <legend>Donation Details</legend>
         {/* Donation Amount */}
         <Input type="number" name="amount" placeholder="Enter Amount" />

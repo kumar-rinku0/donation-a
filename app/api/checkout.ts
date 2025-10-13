@@ -2,10 +2,12 @@
 
 import prisma from "@/lib/prisma";
 import { createOrder } from "@/app/api/razorpay";
+import { redirect } from "next/navigation";
+import { createHmac } from "crypto";
 
-export async function handleSubmit(formData: FormData) {
-  // "use server";
-  // get formdata as an object
+const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY!;
+
+export async function handleSubmitDonation(formData: FormData) {
   const data = Object.fromEntries(formData);
   const amount = data.amount;
   const name = data.name;
@@ -13,7 +15,7 @@ export async function handleSubmit(formData: FormData) {
   const phone = data.phone;
   const message = data.message;
   const order_id = await createOrder(Number(amount));
-  const payment = await prisma.payment.create({
+  await prisma.payment.create({
     data: {
       amount: Number(amount),
       name: String(name) || "anonymous",
@@ -25,5 +27,37 @@ export async function handleSubmit(formData: FormData) {
       status: "created",
     },
   });
-  //   return payment;
+  redirect(`/donate/${order_id}`);
+}
+
+export async function handleVerifyPayment(payment: {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}) {
+  const payment_details = await prisma.payment.findUnique({
+    where: { order_id: payment.razorpay_order_id },
+  });
+  if (!payment_details) {
+    console.log("payment details not found.");
+    return;
+  }
+  const generated_signature = createHmac("sha256", SECRET_KEY)
+    .update(payment_details.order_id + "|" + payment.razorpay_payment_id)
+    .digest("hex");
+  if (
+    payment_details.order_id === payment.razorpay_order_id &&
+    generated_signature === payment.razorpay_signature
+  ) {
+    await prisma.payment.update({
+      where: { order_id: payment_details.order_id },
+      data: { status: "captured" },
+    });
+  } else {
+    await prisma.payment.update({
+      where: { order_id: payment_details.order_id },
+      data: { status: "failed" },
+    });
+  }
+  redirect(`/donate/${payment_details.order_id}`);
 }

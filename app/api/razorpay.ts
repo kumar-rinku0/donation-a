@@ -2,10 +2,8 @@
 
 import Razorpay from "razorpay";
 
-const CLIENT_ID = process.env.RAZORPAY_KEY_ID;
-const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY;
-console.log("Client ID:", CLIENT_ID);
-console.log("Secret Key:", SECRET_KEY);
+const CLIENT_ID = process.env.RAZORPAY_KEY_ID!;
+const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY!;
 
 if (!CLIENT_ID || !SECRET_KEY) {
   throw new Error("Razorpay keys are not set in environment variables");
