@@ -1,9 +1,11 @@
-import Image from "next/image";
+import HeroPage, { Programs, Stats } from "@/components/hero-page";
 
 export default function Home() {
   return (
     <div>
-      <div>Home</div>
+      <HeroPage />
+      <Stats />
+      <Programs />
     </div>
   );
 }

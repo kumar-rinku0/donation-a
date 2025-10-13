@@ -91,13 +91,13 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
     <div className="h-screen w-full flex flex-col gap-8 justify-center items-center">
       {payText === "Paid" && (
         <div className="flex flex-col items-center gap-2">
-          <BadgeCheck size={48} color="green" />
+          <BadgeCheck className="size-16" color="green" />
           <h3>Payment Captured</h3>
         </div>
       )}
       {payText === "Try Again!" && (
         <div className="flex flex-col items-center gap-2">
-          <BadgeX size={48} color="red" />
+          <BadgeX className="size-16" color="red" />
           <h3>Payment Failed</h3>
         </div>
       )}
