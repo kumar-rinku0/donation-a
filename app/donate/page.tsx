@@ -52,7 +52,7 @@ const Donation = () => {
       <Form action={handleSubmitPayment} className="flex flex-col space-y-4">
         <legend>Donation Details</legend>
         {/* Donation Amount */}
-        <Input type="number" name="amount" placeholder="Enter Amount" />
+        <Input type="number" name="amount" min={1} placeholder="Enter Amount" />
         {/* Donor Information  */}
         <legend>Donor Information</legend>
         <Input type="text" name="name" placeholder="Your Name" />
