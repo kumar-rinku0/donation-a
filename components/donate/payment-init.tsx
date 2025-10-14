@@ -1,9 +1,9 @@
 "use client";
 
-import { handleVerifyPayment } from "@/app/api/checkout";
-import { Button } from "./ui/button";
+import { handleVerifyPayment, RazorpayPaymentType } from "@/lib/razorpay";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { BadgeCheck, BadgeX, BanknoteX, LoaderCircleIcon } from "lucide-react";
+import { BadgeCheck, BadgeX, LoaderCircleIcon } from "lucide-react";
 
 const razorpay_key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
@@ -12,11 +12,7 @@ declare global {
     Razorpay: any;
   }
 }
-type RazorpayPaymentType = {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-};
+
 type LocalPaymentType = {
   order_id: string;
   id: number;

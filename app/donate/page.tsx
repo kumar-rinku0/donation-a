@@ -1,11 +1,12 @@
 "use server";
 
 import Form from "next/form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle, Heart, Shield } from "lucide-react";
-import { handleSubmitDonation } from "../api/checkout";
+import { handleSubmitPayment } from "@/lib/razorpay";
+import DonationButton from "@/components/donate/donation-btn";
+
 const Donate = () => {
   return (
     <div className="min-h-screen p-8">
@@ -48,7 +49,7 @@ export default Donate;
 const Donation = () => {
   return (
     <div className="max-w-md mx-auto mt-8 p-4 border rounded">
-      <Form action={handleSubmitDonation} className="flex flex-col space-y-4">
+      <Form action={handleSubmitPayment} className="flex flex-col space-y-4">
         <legend>Donation Details</legend>
         {/* Donation Amount */}
         <Input type="number" name="amount" placeholder="Enter Amount" />
@@ -63,9 +64,7 @@ const Donation = () => {
           required
         />
         <Textarea name="message" placeholder="Your Message (Optional)" />
-        <Button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Donate Now
-        </Button>
+        <DonationButton />
       </Form>
     </div>
   );

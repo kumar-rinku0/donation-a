@@ -2,8 +2,8 @@
 
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import PaymentInit from "@/components/payment-init";
-import { BadgeIndianRupee, Home } from "lucide-react";
+import PaymentInit from "@/components/donate/payment-init";
+import { BadgeIndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default async function Donate({
