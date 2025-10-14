@@ -1,18 +1,33 @@
 "use server";
 
+import Razorpay from "razorpay";
 import prisma from "@/lib/prisma";
-import { createOrder } from "@/app/api/razorpay";
 import { redirect } from "next/navigation";
 import { createHmac } from "crypto";
 
+const CLIENT_ID = process.env.RAZORPAY_KEY_ID!;
 const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY!;
-type RazorpayPaymentType = {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
+
+if (!CLIENT_ID || !SECRET_KEY) {
+  throw new Error("Razorpay keys are not set in environment variables");
+}
+
+const client = new Razorpay({
+  key_id: CLIENT_ID,
+  key_secret: SECRET_KEY,
+});
+
+export const createOrder = async (amount: number) => {
+  const options = {
+    amount: amount * 100, // amount in the smallest currency unit
+    currency: "INR",
+    receipt: `RCPT#${Date.now()}`,
+  };
+  const order = await client.orders.create(options);
+  return order.id;
 };
 
-export async function handleSubmitDonation(formData: FormData) {
+export async function handleSubmitPayment(formData: FormData) {
   const data = Object.fromEntries(formData);
   const amount = data.amount;
   const name = data.name;
@@ -34,6 +49,12 @@ export async function handleSubmitDonation(formData: FormData) {
   });
   redirect(`/donate/${order_id}`);
 }
+
+export type RazorpayPaymentType = {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+};
 
 export async function handleVerifyPayment(payment: RazorpayPaymentType) {
   const payment_details = await prisma.payment.findUnique({

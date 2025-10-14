@@ -1,9 +1,9 @@
 "use client";
 
-import { handleVerifyPayment } from "@/app/api/checkout";
-import { Button } from "./ui/button";
+import { handleVerifyPayment, RazorpayPaymentType } from "@/lib/razorpay";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { BadgeCheck, BadgeX, BanknoteX, LoaderCircleIcon } from "lucide-react";
+import { BadgeCheck, BadgeX, LoaderCircleIcon } from "lucide-react";
 
 const razorpay_key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
@@ -12,11 +12,7 @@ declare global {
     Razorpay: any;
   }
 }
-type RazorpayPaymentType = {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-};
+
 type LocalPaymentType = {
   order_id: string;
   id: number;
@@ -49,8 +45,7 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
       key: razorpay_key_id!, // Public key
       amount: payment.amount,
       currency: "INR",
-      name: "My Store",
-      description: "Order Payment",
+      name: "Alpha Donate",
       order_id: payment.order_id,
       handler: async function (res: RazorpayPaymentType) {
         setPayText("Paid");
@@ -64,7 +59,6 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
       },
       modal: {
         ondismiss: function () {
-          // setPayText(`Pay ₹${payment.amount}`);
           setPayText("Try Again!");
           console.log("Payment was cancelled by user.");
           setIsProcessing(false);
@@ -80,20 +74,29 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
         color: "#1c2938",
         backdrop_color: "#1c293888",
       },
+      remember_customer: true,
     };
 
     const rzp = new window.Razorpay(options);
     rzp.on("payment.failed", function (response: any) {
       console.log(response.error);
-      // setPayText("Try Again");
-      // setIsProcessing(false);
     });
     rzp.open();
   };
   return (
-    <div className="h-screen w-full flex flex-col gap-2 justify-center items-center">
-      {payText === "Paid" && <BadgeCheck size={48} color="green" />}
-      {payText === "Try Again!" && <BadgeX size={48} color="red" />}
+    <div className="h-screen w-full flex flex-col gap-8 justify-center items-center">
+      {payText === "Paid" && (
+        <div className="flex flex-col items-center gap-2">
+          <BadgeCheck className="size-16" color="green" />
+          <h3>Payment Captured</h3>
+        </div>
+      )}
+      {payText === "Try Again!" && (
+        <div className="flex flex-col items-center gap-2">
+          <BadgeX className="size-16" color="red" />
+          <h3>Payment Failed</h3>
+        </div>
+      )}
       <Button
         id="paymentBTN"
         variant={"default"}

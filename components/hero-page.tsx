@@ -1,0 +1,104 @@
+import React from "react";
+import { Button } from "./ui/button";
+import { Book, Heart, Users } from "lucide-react";
+
+const HeroPage = () => {
+  return (
+    <div className="h-screen flex flex-col justify-center items-center gap-4">
+      <h1 className="md:w-1/2 text-4xl md:text-6xl text-center">
+        Creating Brighter Futures for Children
+      </h1>
+      <p className="text-sm md:text-lg text-center">
+        Join us in transforming lives through education, healthcare, and
+        community development programs that give every child the chance to
+        succeed.
+      </p>
+      <div className="flex gap-2 justify-center">
+        <Button variant="destructive">Make A Diffrence Today</Button>
+        <Button>Learn More</Button>
+      </div>
+    </div>
+  );
+};
+
+export const Stats = () => {
+  return (
+    <div className="h-40 flex gap-4 flex-wrap justify-around">
+      <div className="flex flex-col gap-2 items-center">
+        <h3 className="text-2xl">50,000+</h3>
+        <p>Children Helped</p>
+      </div>
+      <div className="flex flex-col gap-2 items-center">
+        <h3 className="text-2xl">200+</h3>
+        <p>Communities Served</p>
+      </div>
+      <div className="flex flex-col gap-2 items-center">
+        <h3 className="text-2xl">2,500+</h3>
+        <p>Active Volunteers</p>
+      </div>
+      <div className="flex flex-col gap-2 items-center">
+        <h3 className="text-2xl">25+</h3>
+        <p>Programs Running</p>
+      </div>
+    </div>
+  );
+};
+
+export const Programs = () => {
+  const programs = [
+    {
+      icon: Book,
+      title: "Education Excellence",
+      description:
+        "Providing quality education, school supplies, and scholarships to children in underserved communities.",
+      beneficiaries: "15,000+",
+      quote: "95% school enrollment rate in target areas",
+    },
+    {
+      icon: Heart,
+      title: "Healthcare Access",
+      description:
+        "Mobile health clinics, vaccination drives, and nutrition programs ensuring healthy childhoods.",
+      beneficiaries: "25,000+",
+      quote: "40% reduction in child malnutrition",
+    },
+    {
+      icon: Users,
+      title: "Community Development",
+      description:
+        "Building safe spaces, clean water systems, and supporting families to create thriving communities.",
+      beneficiaries: "10,000+",
+      quote: "200+ communities transformed",
+    },
+  ];
+  return (
+    <div className="flex flex-col gap-8 py-4">
+      <div className="text-center">
+        <h2 className="text-2xl">What We Do</h2>
+        <p>
+          Our comprehensive programs address the critical needs of children in
+          underserved communities
+        </p>
+      </div>
+      <div className="flex flex-wrap justify-center gap-4">
+        {programs.map((program) => (
+          <div key={program.title} className="p-2 max-w-sm flex flex-col gap-2">
+            <program.icon className="size-10" />
+            <h3>{program.title}</h3>
+            <p>{program.description}</p>
+            <div className="flex justify-between">
+              <span>Beneficiaries</span>
+              <span>{program.beneficiaries}</span>
+            </div>
+            <q className="text-center">{program.quote}</q>
+          </div>
+        ))}
+      </div>
+      <div className="self-center">
+        <Button variant="destructive">Learn More About Our Programs</Button>
+      </div>
+    </div>
+  );
+};
+
+export default HeroPage;
