@@ -1,4 +1,8 @@
-import HeroPage, { Programs, Stats } from "@/components/hero-page";
+import HeroPage, {
+  HomeCarousel,
+  Programs,
+  Stats,
+} from "@/components/hero-page";
 
 export default function Home() {
   return (
@@ -6,6 +10,7 @@ export default function Home() {
       <HeroPage />
       <Stats />
       <Programs />
+      <HomeCarousel />
     </div>
   );
 }
