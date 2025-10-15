@@ -203,6 +203,7 @@ export default function Carousel({
             -(index - 1) * trackItemOffset,
           ];
           const outputRange = [90, 0, -90];
+          // eslint-disable-next-line
           const rotateY = useTransform(x, range, outputRange, { clamp: false });
           return (
             <motion.div
