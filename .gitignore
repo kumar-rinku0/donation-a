@@ -10,10 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
-# .eslintignore
-.prisma/
-prisma/generated/
-src/generated/
+# .eslintignore & .gitignore
+prisma/generated/**
+
 
 
 # testing
