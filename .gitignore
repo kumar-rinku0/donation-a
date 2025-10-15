@@ -10,8 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-# .eslintignore & .gitignore
-prisma/generated/**
 
 
 
