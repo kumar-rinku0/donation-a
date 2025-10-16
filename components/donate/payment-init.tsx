@@ -9,6 +9,7 @@ const razorpay_key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
 declare global {
   interface Window {
+    // eslint-disable-next-line
     Razorpay: any;
   }
 }
@@ -78,6 +79,7 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
     };
 
     const rzp = new window.Razorpay(options);
+    // eslint-disable-next-line
     rzp.on("payment.failed", function (response: any) {
       console.log(response.error);
     });

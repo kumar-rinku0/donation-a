@@ -29,15 +29,15 @@ export const createOrder = async (amount: number) => {
 
 export async function handleSubmitPayment(formData: FormData) {
   const data = Object.fromEntries(formData);
-  const amount = data.amount;
+  const amount = Math.abs(Number(data.amount));
   const name = data.name;
   const email = data.email;
   const phone = data.phone;
   const message = data.message;
-  const order_id = await createOrder(Number(amount));
+  const order_id = await createOrder(amount);
   await prisma.payment.create({
     data: {
-      amount: Number(amount),
+      amount: amount,
       name: String(name) || "anonymous",
       email: String(email) || "anonymous@example.com",
       phone: BigInt(String(phone)),

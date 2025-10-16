@@ -2,6 +2,9 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Book, Heart, Users } from "lucide-react";
 
+import Carousel from "@/components/carousel";
+import { FiCode, FiLayout } from "react-icons/fi";
+
 const HeroPage = () => {
   return (
     <div className="h-screen flex flex-col justify-center items-center gap-4">
@@ -96,6 +99,69 @@ export const Programs = () => {
       </div>
       <div className="self-center">
         <Button variant="destructive">Learn More About Our Programs</Button>
+      </div>
+    </div>
+  );
+};
+
+export const HomeCarousel = () => {
+  const items = [
+    {
+      title: "Education Excellence",
+      description:
+        "Providing quality education to children in underserved communities",
+      id: 1,
+      icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=1200&h=600&fit=crop&crop=center",
+    },
+    {
+      title: "Reaching Rural Communities",
+      description: "Bringing educational opportunities to village schools",
+      id: 2,
+      icon: <FiCode className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/flagged/photo-1574097656146-0b43b7660cb6?w=1200&h=600&fit=crop&crop=center",
+    },
+    {
+      title: "Individual Growth",
+      description: "Supporting each child's unique learning journey",
+      id: 3,
+      icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=1200&h=600&fit=crop&crop=center",
+    },
+    {
+      title: "Healthcare & Wellbeing",
+      description: "Providing medical care and emotional support to children",
+      id: 4,
+      icon: <FiCode className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/photo-1616408621653-6755190009a3?w=1200&h=600&fit=crop&crop=center",
+    },
+    {
+      title: "Community Unity",
+      description: "Building stronger communities through collaboration",
+      id: 5,
+      icon: <FiLayout className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?w=1200&h=600&fit=crop&crop=center",
+    },
+    {
+      title: "Knowledge Sharing",
+      description:
+        "Creating opportunities for community learning and development",
+      id: 6,
+      icon: <FiCode className="h-[16px] w-[16px] text-white" />,
+      img: "https://images.unsplash.com/photo-1681011130080-46e470a7c96f?w=1200&h=600&fit=crop&crop=center",
+    },
+  ];
+  return (
+    <div className="p-4">
+      <div className="hidden xl:h-[60vh] xl:flex relative justify-center items-center">
+        <Carousel
+          items={items}
+          baseWidth={1200}
+          autoplay
+          autoplayDelay={2000}
+          loop
+          pauseOnHover
+        />
       </div>
     </div>
   );

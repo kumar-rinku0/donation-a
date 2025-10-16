@@ -5,8 +5,9 @@ import { notFound } from "next/navigation";
 import PaymentInit from "@/components/donate/payment-init";
 import { BadgeIndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export default async function Donate({
+export default async function DonatePayment({
   params,
 }: {
   params: Promise<{ order_id: string }>;
@@ -22,7 +23,7 @@ export default async function Donate({
 
   if (payment.status === "captured") {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
+      <div className="min-h-screen flex flex-col items-center justify-center -mt-16">
         <article className="max-w-2xl space-y-4 font-[family-name:var(--font-geist-sans)]">
           <h1 className="flex gap-1 text-4xl font-bold mb-8 text-[#333333]">
             <span>
@@ -34,12 +35,12 @@ export default async function Donate({
             Thank you! <span className="font-bold">{payment.name}</span>
           </p>
           <div className="flex gap-2">
-            <a href="/donate">
+            <Link href="/donate">
               <Button variant="outline">Back</Button>
-            </a>
-            <a href="/">
+            </Link>
+            <Link href="/">
               <Button variant="default">Home</Button>
-            </a>
+            </Link>
           </div>
         </article>
       </div>
