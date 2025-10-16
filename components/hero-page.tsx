@@ -193,13 +193,13 @@ export const Volunteers = () => {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <span>
-            <Star />
+            <Star fill="gold" color="golds" />
           </span>
           <span>Charity Navigator 4-Star Rating</span>
         </div>
         <div className="flex items-center gap-2">
           <span>
-            <Heart />
+            <Heart fill="red" color="red" />
           </span>
           <span>100% Transparency Promise</span>
         </div>
