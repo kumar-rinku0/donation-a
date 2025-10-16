@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "./ui/button";
-import { Book, Heart, Users } from "lucide-react";
+import { Book, Heart, Star, Users } from "lucide-react";
 
 import Carousel from "@/components/carousel";
 import { FiCode, FiLayout } from "react-icons/fi";
@@ -162,6 +162,47 @@ export const HomeCarousel = () => {
           loop
           pauseOnHover
         />
+      </div>
+    </div>
+  );
+};
+
+export const Volunteers = () => {
+  return (
+    <div className="p-4 flex flex-col justify-center items-center gap-8">
+      <div>Ready to Make a Difference?</div>
+      <div>
+        Join thousands of supporters who believe every child deserves a bright
+        future. Your contribution, no matter the size, creates lasting impact in
+        communities worldwide.
+      </div>
+      <div className="flex justify-center items-center gap-4">
+        <Button variant="destructive">
+          <span>
+            <Heart />
+          </span>
+          <span>Start Your Impact</span>
+        </Button>
+        <Button>
+          <span>Become A Volunteer</span>
+          <span>
+            <Users />
+          </span>
+        </Button>
+      </div>
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <span>
+            <Star />
+          </span>
+          <span>Charity Navigator 4-Star Rating</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span>
+            <Heart />
+          </span>
+          <span>100% Transparency Promise</span>
+        </div>
       </div>
     </div>
   );
