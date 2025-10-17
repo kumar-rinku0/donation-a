@@ -2,6 +2,7 @@ import HeroPage, {
   HomeCarousel,
   Programs,
   Stats,
+  Volunteers,
 } from "@/components/hero-page";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <Stats />
       <Programs />
       <HomeCarousel />
+      <Volunteers />
     </div>
   );
 }
