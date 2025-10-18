@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { createHmac } from "crypto";
 
 const CLIENT_ID = process.env.RAZORPAY_KEY_ID!;
-const SECRET_KEY = process.env.RAZORPAY_SECRET_KEY!;
+const SECRET_KEY = process.env.RAZORPAY_KEY_SECRET!;
 
 if (!CLIENT_ID || !SECRET_KEY) {
   throw new Error("Razorpay keys are not set in environment variables");
