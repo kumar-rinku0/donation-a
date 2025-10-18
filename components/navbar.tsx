@@ -1,3 +1,7 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const links = [
@@ -7,6 +11,7 @@ const links = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
   return (
     <div className="h-20 flex items-center justify-around px-8 bg-gray-800 text-white">
       <h1>Alpha Donate</h1>
@@ -14,7 +19,14 @@ const Navbar = () => {
         <ul className="flex space-x-4">
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href}>{link.label}</a>
+              <Link
+                className={
+                  pathname === link.href ? "text-green-300" : "text-white"
+                }
+                href={link.href}
+              >
+                {link.label}
+              </Link>
             </li>
           ))}
         </ul>
