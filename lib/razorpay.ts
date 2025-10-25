@@ -72,14 +72,36 @@ export async function handleVerifyPayment(payment: RazorpayPaymentType) {
     generated_signature === payment.razorpay_signature
   ) {
     await prisma.payment.update({
-      where: { order_id: payment_details.order_id },
-      data: { status: "captured" },
-    });
-  } else {
-    await prisma.payment.update({
-      where: { order_id: payment_details.order_id },
-      data: { status: "failed" },
+      where: { order_id: payment_details.order_id, status: "created" },
+      data: { status: "pending" },
     });
   }
   redirect(`/donate/${payment_details.order_id}`);
 }
+
+// 👉 2. Webhook endpoint
+// router.post('/webhook', (req, res) => {
+//   const secret = process.env.WEBHOOK_SECRET;
+//   const signature = req.headers['x-razorpay-signature'];
+//   const body = JSON.stringify(req.body);
+
+//   const expectedSignature = crypto
+//     .createHmac('sha256', secret)
+//     .update(body)
+//     .digest('hex');
+
+//   if (signature === expectedSignature) {
+//     console.log('✅ Webhook verified:', req.body.event);
+//     const event = req.body.event;
+
+//     if (event === 'payment.captured') {
+//       const payment = req.body.payload.payment.entity;
+//       console.log('💰 Payment successful:', payment.id);
+//       // You can update your DB order status here
+//     }
+//     res.status(200).send('OK');
+//   } else {
+//     console.log('❌ Invalid webhook signature');
+//     res.status(400).send('Invalid signature');
+//   }
+// });
