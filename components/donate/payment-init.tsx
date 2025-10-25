@@ -3,7 +3,7 @@
 import { handleVerifyPayment, RazorpayPaymentType } from "@/lib/razorpay";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { BadgeCheck, BadgeX, LoaderCircleIcon } from "lucide-react";
+import { BadgeCheck, BadgeX, LoaderCircleIcon, Lock } from "lucide-react";
 
 const razorpay_key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
 
@@ -26,8 +26,9 @@ type LocalPaymentType = {
   message: string;
 };
 
+// ₹${payment.amount}
 const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
-  const [payText, setPayText] = useState(`Pay ₹${payment.amount}`);
+  const [payText, setPayText] = useState(`Donate ₹${payment.amount}`);
   const [isProcessing, setIsProcessing] = useState(false);
   const displayRazorpay = async () => {
     const res = await loadScript(
@@ -99,6 +100,14 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
           <h3>Payment Failed</h3>
         </div>
       )}
+      {payText === `Donate ₹${payment.amount}` && (
+        <div className="w-full flex flex-col items-center gap-2 px-4">
+          <h3 className="text-center">Donate ₹{payment.amount} to Alpha</h3>
+          <p className="text-sm text-muted-foreground">
+            You will be redirected to Razorpay to complete the payment.
+          </p>
+        </div>
+      )}
       <Button
         id="paymentBTN"
         variant={"default"}
@@ -109,6 +118,11 @@ const PaymentInit = ({ payment }: { payment: LocalPaymentType }) => {
         <span>
           {payText === "Processing..." && (
             <LoaderCircleIcon className="animate-spin" />
+          )}
+          {payText === `Donate ₹${payment.amount}` && (
+            <span>
+              <Lock />
+            </span>
           )}
         </span>
         {payText}
