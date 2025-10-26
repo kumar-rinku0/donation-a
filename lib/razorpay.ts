@@ -71,6 +71,15 @@ export async function handleVerifyPayment(payment: RazorpayPaymentType) {
     payment_details.order_id === payment.razorpay_order_id &&
     generated_signature === payment.razorpay_signature
   ) {
+    if (payment_details.status !== "captured") {
+      await prisma.payment.update({
+        where: { order_id: payment_details.order_id, status: "created" },
+        data: { status: "captured" },
+      });
+    } else {
+      console.log("Payment already captured.");
+    }
+  } else {
     await prisma.payment.update({
       where: { order_id: payment_details.order_id, status: "created" },
       data: { status: "pending" },
