@@ -4,6 +4,7 @@ import type { Variants } from "motion/react";
 import { stagger } from "motion/react";
 import * as motion from "motion/react-client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Variants({
@@ -96,6 +97,7 @@ const MenuItem = ({
   };
   closeOnClick: () => void;
 }) => {
+  const pathname = usePathname();
   //   const border = `2px solid ${colors[i]}`;
   return (
     <motion.li
@@ -104,6 +106,7 @@ const MenuItem = ({
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       onClick={closeOnClick}
+      className={pathname === i.id ? "text-green-700" : "text-black"}
     >
       {/* <div style={{ ...iconPlaceholder, border }} />
       <div style={{ ...textPlaceholder, border }} /> */}
